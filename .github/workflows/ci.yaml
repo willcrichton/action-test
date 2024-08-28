@@ -19,7 +19,7 @@ jobs:
   publish-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifacts@v4
+      - uses: actions/download-artifact@v4
       - uses: softprops/action-gh-release@v2
         with: 
           tag_name: ${{ github.sha }}
