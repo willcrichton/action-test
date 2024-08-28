@@ -1,0 +1,26 @@
+jobs:  
+  generate-artifacts:
+    strategy:
+      matrix:
+        include:
+          - name: a
+          - name: b
+
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ matrix.name }} > ${{ matrix.name }}.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: ${{ matrix.name }}.txt
+
+  publish-artifacts:
+    steps:
+      - uses: actions/download-artifacts@v4
+      - uses: softprops/action-gh-release@v2
+        with: 
+          tag_name: ${{ github.sha }}
+          files: |
+            a/a.txt
+            b/b.txt
+      
